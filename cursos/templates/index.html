@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Inicio - Sabor y Lengua{% endblock %}
+
+{% block content %}
+
+<!-- Hero principal -->
+<section class="text-center py-5 bg-light rounded shadow-sm">
+    <div class="container">
+        <img src="{% static 'img/logo.jpeg' %}" alt="Sabor y Lengua Logo" width="200" class="mb-3">
+        <h1 class="fw-bold text-primary mb-3">Bienvenido a <span class="text-dark">Sabor y Lengua</span></h1>
+        <p class="lead mb-4">Aprende español mientras disfrutas clases de cocina tradicional guatemalteca</p>
+        <a href="{% url 'cursos' %}" class="btn btn-dark btn-lg shadow">Explorar Cursos</a>
+    </div>
+</section>
+
+<!-- Sección de cursos -->
+<section class="container mt-5">
+    <h2 class="text-center mb-4 fw-semibold">Nuestros Cursos Destacados</h2>
+    <div class="row">
+        {% for curso in cursos %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-primary">{{ curso.nombre_curso }}</h5>
+                        <p class="card-text text-muted">{{ curso.descripcion|truncatechars:120 }}</p>
+                        <div class="mt-auto">
+                            <a href="{% url 'curso_detalle' curso.id %}" class="btn btn-outline-primary w-100">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="p-4 bg-white shadow-sm rounded text-center">
+                    <h4 class="fw-bold mb-3">Descubre una experiencia cultural única</h4>
+                    <p class="text-muted">
+                        Vive una experiencia culinaria auténtica en San Pedro La Laguna, a orillas del Lago de Atitlán.  
+                        Aprende los secretos de la cocina maya guatemalteca en nuestras clases prácticas y disfruta preparando platos tradicionales mientras mejoras tu español.
+                    </p>
+                    <p class="text-muted">
+                        La jornada comienza con una visita guiada al mercado local, donde conocerás ingredientes, especias y costumbres gastronómicas.  
+                        Luego, cocinarás junto a nuestros instructores y degustarás los platillos preparados.
+                    </p>
+                    <p class="text-muted">
+                        ¡Una aventura perfecta para viajeros, familias y amantes de la cultura!  
+                        Contáctanos en <strong>naanmariycookingclass@gmail.com</strong> o por WhatsApp para reservar tu clase.
+                    </p>
+                    <a href="{% url 'recetas' %}" class="btn btn-dark mt-3">Ver Recetas Tradicionales</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Sección inspiracional -->
+<section class="mt-5 py-5 bg-dark text-white text-center rounded shadow-sm">
+    <div class="container">
+        <h3 class="fw-bold">“Cocinar es aprender el idioma del alma”</h3>
+        <p class="lead mt-3">Sumérgete en una experiencia que une sabores, cultura y aprendizaje.</p>
+    </div>
+</section>
+
+{% endblock %}

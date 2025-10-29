@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Recetas{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Recetas de nuestros cursos</h2>
+<div class="row">
+    {% for receta in recetas %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ receta.nombre_receta }}</h5>
+                    <p><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
+                    <p><strong>Pasos:</strong> {{ receta.pasos }}</p>
+                    {% if receta.traduccion %}
+                        <p><em>Traducción: {{ receta.traduccion }}</em></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No hay recetas disponibles.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Cursos | Aprende Español Cocinando{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+  <div class="container">
+    <h1 class="text-center mb-5 fw-bold">Nuestros Cursos</h1>
+
+    <!-- Recorremos las categorías de cursos -->
+    {% for categoria, cursos_cat in cursos_por_categoria.items %}
+      <div class="mb-5">
+        <h2 class="text-uppercase text-center mb-4 border-bottom pb-2">{{ categoria }}</h2>
+
+        <div class="row g-4">
+          {% for curso in cursos_cat %}
+          <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+              {% if curso.imagen %}
+              <img src="{{ curso.imagen.url }}" class="card-img-top" alt="{{ curso.nombre }}">
+              {% else %}
+              <img src="{% static 'images/curso_default.jpg' %}" class="card-img-top" alt="Imagen no disponible">
+              {% endif %}
+
+              <div class="card-body">
+                <h5 class="card-title fw-semibold">{{ curso.nombre }}</h5>
+                <p class="card-text text-muted">{{ curso.descripcion|truncatechars:120 }}</p>
+              </div>
+
+              <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-primary fs-5">Q{{ curso.precio }}</span>
+                <a href="{% url 'curso_detalle' curso.id %}" class="btn btn-outline-primary btn-sm">Ver más</a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+            <p class="text-center">No hay cursos disponibles en esta categoría.</p>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  body {
+    background-color: #fffaf5;
+  }
+
+  h1, h2 {
+    color: #3a2f2f;
+  }
+
+  .card {
+    border-radius: 15px;
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-img-top {
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  .card-body {
+    min-height: 150px;
+  }
+
+  .btn-outline-primary {
+    border-radius: 50px;
+  }
+</style>
+{% endblock %}
+

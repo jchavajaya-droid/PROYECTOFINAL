@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Detalle Curso - {{ curso.nombre_curso }}{% endblock %}
+{% block content %}
+
+<h2>{{ curso.nombre_curso }}</h2>
+<p><strong>Profesor:</strong> {{ curso.profesor.username }}</p>
+<p><strong>Categoría:</strong> {{ curso.categoria }}</p>
+<p>{{ curso.descripcion }}</p>
+
+<h4 class="mt-4">Clases programadas</h4>
+<ul class="list-group">
+    {% for clase in curso.clase_set.all %}
+        <li class="list-group-item">
+            {{ clase.fecha }} - {{ clase.hora }} | Cupo: {{ clase.cupo }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">No hay clases programadas</li>
+    {% endfor %}
+</ul>
+
+<a href="#" class="btn btn-success mt-3">Inscribirme</a>
+
+{% endblock %}
