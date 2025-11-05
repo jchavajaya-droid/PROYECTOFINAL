@@ -1,42 +1,57 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Curso, Receta
-from django.contrib.auth.models import User   # Si usas el sistema de usuarios de Django
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import Perfil, Curso, Inscripcion
 
-# Página de inicio
-def index(request):
-    return render(request, "index.html")
+# ----------------------------
+# VISTAS DE CURSOS
+# ----------------------------
 
-# Listado de cursos
+@login_required
 def lista_cursos(request):
-    cursos = Curso.objects.all()   # Trae todos los cursos de la BD
-    return render(request, "cursos.html", {"cursos": cursos})
-
-# Detalle de un curso
-def curso_detalle(request, curso_id):
-    curso = get_object_or_404(Curso, id=curso_id)
-    return render(request, "curso_detalle.html", {"curso": curso})
-
-# Listado de recetas
-def lista_recetas(request):
-    recetas = Receta.objects.all()
-    return render(request, "recetas.html", {"recetas": recetas})
-
-# Perfil de usuario (ejemplo: usuario logueado)
-def perfil_usuario(request):
-    if request.user.is_authenticated:
-        usuario = request.user
-    else:
-        usuario = None
-    return render(request, "perfil.html", {"usuario": usuario})
-
-def cursos_view(request):
+    """Muestra todos los cursos disponibles"""
     cursos = Curso.objects.all()
-    cursos_por_categoria = {}
-    for curso in cursos:
-        categoria = curso.categoria if curso.categoria else "Sin categoría"
-        cursos_por_categoria.setdefault(categoria, []).append(curso)
+    return render(request, "lista_cursos.html", {"cursos": cursos})
 
-    return render(request, 'cursos.html', {
-        'cursos_por_categoria': cursos_por_categoria
-    })
+@login_required
+def inscribirse_curso(request, curso_id):
+    """Permite inscribirse a un curso"""
+    curso = get_object_or_404(Curso, id=curso_id)
+
+    # Evitar inscribirse dos veces
+    inscripcion, creada = Inscripcion.objects.get_or_create(
+        usuario=request.user,
+        curso=curso
+    )
+
+    if creada:
+        messages.success(request, f"Te has inscrito correctamente en {curso.nombre}.")
+    else:
+        messages.info(request, f"Ya estás inscrito en {curso.nombre}.")
+
+    return redirect("lista_cursos")
+
+@login_required
+def perfil(request):
+    """Vista del perfil del usuario"""
+    perfil, creado = PerfilUsuario.objects.get_or_create(usuario=request.user)
+    return render(request, "perfil.html", {"perfil": perfil})
+
+def index(request):
+    """Página principal"""
+    cursos = Curso.objects.all()
+    return render(request, 'index.html', {'cursos': cursos})
+
+@login_required
+def curso_detalle(request, curso_id):
+    """Muestra el detalle de un curso específico"""
+    curso = get_object_or_404(Curso, id=curso_id)
+    return render(request, "cursos/curso_detalle.html", {"curso": curso})
+
+# views.py
+@login_required
+def lista_recetas(request):
+    """Muestra todas las recetas"""
+    recetas = Receta.objects.all()  # Asegúrate de tener un modelo Receta
+    return render(request, "cursos/lista_recetas.html", {"recetas": recetas})
 

@@ -1,0 +1,13 @@
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+img.rounded-circle {
+    border: 4px solid #0d6efd;
+    object-fit: cover;
+}

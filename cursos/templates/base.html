@@ -9,21 +9,17 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        footer {
-            margin-top: 40px;
-        }
-    </style>
+    <!-- Estilos generales -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
-<body>
+
+<body class="d-flex flex-column min-vh-100">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center fw-bold" href="{% url 'index' %}">
-                <img src="{% static 'img/logo.jpeg' %}" alt="logo" width="50" height="50" class="me-2">
+                <img src="{% static 'img/logo.jpeg' %}" alt="logo" width="45" height="45" class="me-2 rounded-circle">
                 Sabor y Lengua
             </a>
 
@@ -32,25 +28,53 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'cursos' %}">Cursos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'recetas' %}">Recetas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'perfil' %}">Mi Perfil</a></li>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'cursos' %}active{% endif %}" href="{% url 'cursos' %}">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'recetas' %}active{% endif %}" href="{% url 'recetas' %}">Recetas</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-semibold text-white" href="#" role="button" data-bs-toggle="dropdown">
+                                👋 Hola, {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'perfil' %}">Mi Perfil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'iniciar_sesion' %}">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light btn-sm ms-2" href="{% url 'registrarse' %}">Registrarse</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Contenido -->
-    <div class="container mt-4">
+    <main class="container mt-4 mb-5 flex-grow-1">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3">
-        © 2025 Sabor y Lengua - Aprende Español Cocinando
+    <footer class="footer bg-dark text-white text-center py-3 mt-auto">
+        <p class="mb-0">&copy; 2025 <strong>Sabor y Lengua</strong> — Aprende Español Cocinando</p>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

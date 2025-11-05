@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mi Perfil | Sabor y Lengua{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body text-center p-4">
+
+                    <!-- Foto de perfil -->
+                    {% if perfil.foto %}
+                        <img src="{{ perfil.foto.url }}" alt="Foto de perfil" class="rounded-circle mb-3" width="120" height="120">
+                    {% else %}
+                        <img src="{% static 'img/default_user.png' %}" alt="Usuario" class="rounded-circle mb-3" width="120" height="120">
+                    {% endif %}
+
+                    <h3 class="fw-bold mb-1 text-primary">
+                        {{ user.first_name|default:user.username }}
+                    </h3>
+                    <p class="text-muted">@{{ user.username }}</p>
+
+                    <hr>
+
+                    <div class="text-start px-4">
+                        <p><strong>Correo electrónico:</strong> {{ user.email }}</p>
+                        <p><strong>Fecha de registro:</strong> {{ user.date_joined|date:"d M Y" }}</p>
+                        {% if perfil.bio %}
+                            <p><strong>Sobre mí:</strong> {{ perfil.bio }}</p>
+                        {% endif %}
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <a href="{% url 'index' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-house"></i> Volver al inicio
+                        </a>
+                        <a href="{% url 'cerrar_sesion' %}" class="btn btn-danger">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
