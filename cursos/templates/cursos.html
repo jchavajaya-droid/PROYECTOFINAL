@@ -1,58 +1,105 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Cursos disponibles - SaborLengua{% endblock %}
-
 {% block content %}
-<div class="container py-5">
-  <div class="text-center mb-5">
-    <h1 class="fw-bold text-primary">Nuestros Cursos</h1>
-    <p class="text-muted fs-5">
-      Aprende con los mejores instructores en cada área.  
-      Selecciona un curso y comienza tu experiencia de aprendizaje.
-    </p>
-  </div>
+<div class="container mt-5">
+  <h1 class="text-center mb-4 text-success fw-bold">Cursos Disponibles</h1>
+  <p class="text-center text-muted mb-5">
+    Aprende sobre la gastronomía guatemalteca con nuestros cursos prácticos y llenos de sabor.
+  </p>
 
-  {% if cursos %}
   <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for curso in cursos %}
+
+    <!-- Curso 1 -->
     <div class="col">
-      <div class="card h-100 shadow-sm border-0">
-        {% if curso.imagen %}
-        <img src="{{ curso.imagen.url }}" class="card-img-top" alt="{{ curso.nombre }}">
-        {% else %}
-        <img src="{% static 'img/default_curso.jpg' %}" class="card-img-top" alt="Curso">
-        {% endif %}
-
+      <div class="card h-100 shadow-sm">
+        <img src="{% static 'img/pepian.jpg' %}" class="card-img-top" alt="Pepián">
         <div class="card-body">
-          <h5 class="card-title text-primary fw-bold">{{ curso.nombre }}</h5>
-          <p class="card-text text-muted">
-            {{ curso.descripcion|truncatewords:25 }}
+          <h5 class="card-title text-primary">Cocina Tradicional Guatemalteca</h5>
+          <p class="card-text">
+            Aprende a preparar platillos típicos como el Pepián, Kak’ik y Jocon, rescatando las raíces mayas y coloniales.
           </p>
-        </div>
-
-        <div class="card-footer bg-white border-0 text-center pb-4">
-          <a href="{% url 'detalle_curso' curso.id %}" class="btn btn-outline-primary px-4">
-            Ver detalles
-          </a>
-          {% if user.is_authenticated %}
-          <a href="{% url 'inscribirse_curso' curso.id %}" class="btn btn-primary px-4 ms-2">
-            Inscribirme
-          </a>
-          {% else %}
-          <a href="{% url 'iniciar_sesion' %}" class="btn btn-secondary px-4 ms-2">
-            Inicia sesión para inscribirte
-          </a>
-          {% endif %}
+          <a href="#" class="btn btn-outline-success w-100 mt-2">Ver detalles</a>
         </div>
       </div>
     </div>
-    {% endfor %}
+
+    <!-- Curso 2 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{% static 'img/tamales.jpg' %}" class="card-img-top" alt="Tamales">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Tamales y Repostería Artesanal</h5>
+          <p class="card-text">
+            Descubre las técnicas tradicionales para elaborar tamales, rellenitos, champurradas y otros postres guatemaltecos.
+          </p>
+          <a href="#" class="btn btn-outline-success w-100 mt-2">Ver detalles</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curso 3 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{% static 'img/bebidas.jpg' %}" class="card-img-top" alt="Refrescos">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Bebidas Típicas y Refrescos Naturales</h5>
+          <p class="card-text">
+            Aprende a preparar bebidas como rosa de Jamaica, tamarindo, horchata y atol de elote con ingredientes naturales.
+          </p>
+          <a href="#" class="btn btn-outline-success w-100 mt-2">Ver detalles</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curso 4 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{% static 'img/caldores.jpg' %}" class="card-img-top" alt="Caldo de res">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Sopas y Caldos Guatemaltecos</h5>
+          <p class="card-text">
+            Domina la preparación de caldos tradicionales como el de res, gallina criolla y caldo de mariscos al estilo guatemalteco.
+          </p>
+          <a href="#" class="btn btn-outline-success w-100 mt-2">Ver detalles</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curso 5 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{% static 'img/fiambre.jpg' %}" class="card-img-top" alt="Fiambre">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Curso Especial: Fiambre y Platillos Festivos</h5>
+          <p class="card-text">
+            Aprende el arte de preparar el fiambre, un símbolo del Día de los Santos, junto con otras recetas para ocasiones especiales.
+          </p>
+          <a href="#" class="btn btn-outline-success w-100 mt-2">Ver detalles</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curso 6 -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <img src="{% static 'img/atolelote.jpg' %}" class="card-img-top" alt="Atol de elote">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Dulces y Atoles Tradicionales</h5>
+          <p class="card-text">
+            Prepara dulces como cocadas, camote en miel y atoles clásicos con maíz, arroz y plátano.
+          </p>
+          <a href="#" class="btn btn-outline-success w-100 mt-2">Ver detalles</a>
+        </div>
+      </div>
+    </div>
   </div>
-  {% else %}
-  <div class="text-center mt-5">
-    <p class="text-muted fs-5">No hay cursos disponibles por el momento. Vuelve pronto 😊</p>
-  </div>
-  {% endif %}
 </div>
+
+<style>
+  .card:hover {
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+  }
+</style>
 {% endblock %}
