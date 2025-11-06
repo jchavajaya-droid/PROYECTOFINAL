@@ -1,31 +1,58 @@
-<!-- templates/cursos.html -->
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cursos disponibles - SaborLengua{% endblock %}
 
 {% block content %}
-<h1>Lista de Cursos</h1>
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h1 class="fw-bold text-primary">Nuestros Cursos</h1>
+    <p class="text-muted fs-5">
+      Aprende con los mejores instructores en cada área.  
+      Selecciona un curso y comienza tu experiencia de aprendizaje.
+    </p>
+  </div>
 
-{% for mensaje in messages %}
-<div class="alert alert-info">{{ mensaje }}</div>
-{% endfor %}
-
-<div class="row">
+  {% if cursos %}
+  <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for curso in cursos %}
-    <div class="col-md-4">
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{ curso.nombre }}</h5>
-                <p class="card-text">{{ curso.descripcion }}</p>
-                <p><strong>Duración:</strong> {{ curso.duracion }} horas</p>
-                <p><strong>Nivel:</strong> {{ curso.nivel }}</p>
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        {% if curso.imagen %}
+        <img src="{{ curso.imagen.url }}" class="card-img-top" alt="{{ curso.nombre }}">
+        {% else %}
+        <img src="{% static 'img/default_curso.jpg' %}" class="card-img-top" alt="Curso">
+        {% endif %}
 
-                <form method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="curso_id" value="{{ curso.id }}">
-                    <button type="submit" class="btn btn-primary">Inscribirse</button>
-                </form>
-            </div>
+        <div class="card-body">
+          <h5 class="card-title text-primary fw-bold">{{ curso.nombre }}</h5>
+          <p class="card-text text-muted">
+            {{ curso.descripcion|truncatewords:25 }}
+          </p>
         </div>
+
+        <div class="card-footer bg-white border-0 text-center pb-4">
+          <a href="{% url 'detalle_curso' curso.id %}" class="btn btn-outline-primary px-4">
+            Ver detalles
+          </a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'inscribirse_curso' curso.id %}" class="btn btn-primary px-4 ms-2">
+            Inscribirme
+          </a>
+          {% else %}
+          <a href="{% url 'iniciar_sesion' %}" class="btn btn-secondary px-4 ms-2">
+            Inicia sesión para inscribirte
+          </a>
+          {% endif %}
+        </div>
+      </div>
     </div>
     {% endfor %}
+  </div>
+  {% else %}
+  <div class="text-center mt-5">
+    <p class="text-muted fs-5">No hay cursos disponibles por el momento. Vuelve pronto 😊</p>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

@@ -99,12 +99,16 @@ def iniciar_sesion(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
+            # Crear perfil si no existe
+            Perfil.objects.get_or_create(user=user)
+
             login(request, user)
             messages.success(request, f"¡Bienvenido, {user.username}!")
             return redirect("perfil")
         else:
             messages.error(request, "Credenciales inválidas. Inténtalo nuevamente.")
     return render(request, "login.html")
+
 
 
 @login_required

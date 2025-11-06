@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Perfil, Curso, Inscripcion
+from .models import Perfil, Curso, Inscripcion, Receta
 
 # ----------------------------
 # VISTAS DE CURSOS
@@ -11,7 +11,7 @@ from .models import Perfil, Curso, Inscripcion
 def lista_cursos(request):
     """Muestra todos los cursos disponibles"""
     cursos = Curso.objects.all()
-    return render(request, "lista_cursos.html", {"cursos": cursos})
+    return render(request, "cursos.html", {"cursos": cursos})
 
 @login_required
 def inscribirse_curso(request, curso_id):
@@ -29,7 +29,7 @@ def inscribirse_curso(request, curso_id):
     else:
         messages.info(request, f"Ya estás inscrito en {curso.nombre}.")
 
-    return redirect("lista_cursos")
+    return redirect("cursos")
 
 @login_required
 def perfil(request):
@@ -46,12 +46,12 @@ def index(request):
 def curso_detalle(request, curso_id):
     """Muestra el detalle de un curso específico"""
     curso = get_object_or_404(Curso, id=curso_id)
-    return render(request, "cursos/curso_detalle.html", {"curso": curso})
+    return render(request, "curso_detalle.html", {"curso": curso})
 
 # views.py
 @login_required
 def lista_recetas(request):
     """Muestra todas las recetas"""
     recetas = Receta.objects.all()  # Asegúrate de tener un modelo Receta
-    return render(request, "cursos/lista_recetas.html", {"recetas": recetas})
+    return render(request, "recetas.html", {"recetas": recetas})
 

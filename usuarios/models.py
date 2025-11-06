@@ -15,13 +15,9 @@ class Perfil(models.Model):
     def __str__(self):
         return self.user.username
 
-# Señal para crear automáticamente el perfil cuando se crea un usuario
-@receiver(post_save, sender=User)
-def crear_perfil(sender, instance, created, **kwargs):
-    if created:
-        Perfil.objects.create(user=instance)
-
 # Señal para guardar el perfil automáticamente cuando se guarda el usuario
 @receiver(post_save, sender=User)
 def guardar_perfil(sender, instance, **kwargs):
-    instance.perfil.save()
+    if hasattr(instance, 'perfil'):
+        instance.perfil.save()
+

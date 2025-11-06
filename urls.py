@@ -16,16 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from cursos import views as cursos_views  # importa la vista index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('cursos.urls')),
     path('usuarios/', include('usuarios.urls')),
-    path('inscripciones/', include('inscripciones.urls')),
-
-    # Agregar autenticación de Django
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('cursos/', include('cursos.urls')),
+    path('', cursos_views.index, name='index'),  # <-- esta línea agrega la URL para 'index'
 ]
+
+
+
+
 
 
 

@@ -1,25 +1,122 @@
 {% extends "base.html" %}
-{% block title %}Recetas{% endblock %}
+{% load static %}
+
+{% block title %}Recetas típicas de Guatemala - SaborLengua{% endblock %}
+
 {% block content %}
+<div class="container py-5">
+  <!-- Encabezado -->
+  <div class="text-center mb-5">
+    <h1 class="fw-bold text-success">Recetas Típicas de Guatemala</h1>
+    <p class="text-muted fs-5">
+      Descubre el sabor auténtico de nuestra tierra.  
+      Aprende a preparar las recetas más queridas por los guatemaltecos.
+    </p>
+  </div>
 
-<h2 class="mb-4">Recetas de nuestros cursos</h2>
-<div class="row">
-    {% for receta in recetas %}
-        <div class="col-md-6">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ receta.nombre_receta }}</h5>
-                    <p><strong>Ingredientes:</strong> {{ receta.ingredientes }}</p>
-                    <p><strong>Pasos:</strong> {{ receta.pasos }}</p>
-                    {% if receta.traduccion %}
-                        <p><em>Traducción: {{ receta.traduccion }}</em></p>
-                    {% endif %}
-                </div>
-            </div>
+  <!-- Lista de recetas -->
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <!-- Pepián -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{%static 'img/pepian.jpg' %}" class="card-img-top" alt="Pepián guatemalteco">
+        <div class="card-body">
+          <h5 class="card-title text-success fw-bold">Pepián</h5>
+          <p class="card-text text-muted">
+            Guiso espeso y lleno de sabor, preparado con carne (pollo, res o cerdo), tomate, miltomate y especias tostadas.  
+            Es considerado el platillo nacional de Guatemala.
+          </p>
         </div>
-    {% empty %}
-        <p>No hay recetas disponibles.</p>
-    {% endfor %}
-</div>
+        <div class="card-footer bg-white text-center pb-3">
+          <a href="#" class="btn btn-outline-success px-4">Ver receta completa</a>
+        </div>
+      </div>
+    </div>
 
+    <!-- Kak'ik -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{% static 'img/kakik.jpg' %}" class="card-img-top" alt="Kak'ik">
+        <div class="card-body">
+          <h5 class="card-title text-success fw-bold">Kak’ik</h5>
+          <p class="card-text text-muted">
+            Sopa tradicional maya q’eqchi’ elaborada con pavo criollo, especias y chile rojo seco.  
+            Se sirve caliente con arroz y tamalitos de masa.
+          </p>
+        </div>
+        <div class="card-footer bg-white text-center pb-3">
+          <a href="#" class="btn btn-outline-success px-4">Ver receta completa</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jocon -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{% static 'img/jocon.jpg' %}" class="card-img-top" alt="Jocón">
+        <div class="card-body">
+          <h5 class="card-title text-success fw-bold">Jocón</h5>
+          <p class="card-text text-muted">
+            Platillo típico del altiplano guatemalteco, preparado con pollo en una salsa verde de tomatillo, cilantro y cebolla.  
+            Se acompaña con arroz blanco.
+          </p>
+        </div>
+        <div class="card-footer bg-white text-center pb-3">
+          <a href="#" class="btn btn-outline-success px-4">Ver receta completa</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tamales colorados -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{% static 'img/tamales.jpg' %}" class="card-img-top" alt="Tamales colorados">
+        <div class="card-body">
+          <h5 class="card-title text-success fw-bold">Tamales</h5>
+          <p class="card-text text-muted">
+            Masa de maíz rellena de carne de cerdo o pollo, bañada en salsa roja de tomate, chile guaque y especias,  
+            envuelta en hojas de plátano y cocida al vapor.
+          </p>
+        </div>
+        <div class="card-footer bg-white text-center pb-3">
+          <a href="#" class="btn btn-outline-success px-4">Ver receta completa</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enchiladas guatemaltecas -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{% static 'img/enchiladas.png' %}" class="card-img-top" alt="Enchiladas guatemaltecas">
+        <div class="card-body">
+          <h5 class="card-title text-success fw-bold">Enchiladas</h5>
+          <p class="card-text text-muted">
+            Tortilla frita cubierta con remolacha, carne molida, verduras, huevo duro y queso rallado.  
+            Un plato colorido y festivo de las ferias guatemaltecas.
+          </p>
+        </div>
+        <div class="card-footer bg-white text-center pb-3">
+          <a href="#" class="btn btn-outline-success px-4">Ver receta completa</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rellenitos -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{% static 'img/rellenitos.png' %}" class="card-img-top" alt="Rellenitos de plátano">
+        <div class="card-body">
+          <h5 class="card-title text-success fw-bold">Rellenitos de Plátano</h5>
+          <p class="card-text text-muted">
+            Postre típico hecho con puré de plátano maduro relleno de frijoles dulces y frito hasta quedar dorado.  
+            Se sirve con azúcar espolvoreada.
+          </p>
+        </div>
+        <div class="card-footer bg-white text-center pb-3">
+          <a href="#" class="btn btn-outline-success px-4">Ver receta completa</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
